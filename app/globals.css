@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Stay Fresh — negro profundo (no plano) + acento naranja señal */
+    --background: 0 0% 2%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 16 100% 50%;           /* Accent #FF4400 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 66%;     /* Bone mute #A8A8A8 */
+
+    --accent: 16 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 100% 67%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 23%;               /* #3A3A3A */
+    --input: 0 0% 15%;
+    --ring: 16 100% 50%;
+
+    --radius: 1.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ink text-bone font-body antialiased;
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-accent text-bone;
+  }
+  /* Sora solo carga 500/600/700 — sin esto, los headings sin peso
+     explícito piden 400 y el navegador ajusta al peso cargado más
+     cercano de forma inconsistente entre secciones. */
+  .font-display {
+    font-weight: 600;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Grain overlay — usar sobre fotos B&N de alto contraste */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--tw-bg-grain);
+    opacity: 0.08;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  /* Hairline divider editorial */
+  .hairline {
+    @apply h-px w-full bg-bone-border/40;
+  }
+
+  /* Glass card — vidrio esmerilado tipo Apple/glassmorphism. Necesita algo
+     con color/blur detrás (ver <BackgroundOrbs>) para que el backdrop-blur
+     realmente se note en vez de verse como un panel gris plano. */
+  .glass {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  }
+
+  /* Nav flotante — vidrio más sutil, pensado para quedar sticky arriba */
+  .glass-nav {
+    background: rgba(2, 2, 2, 0.55);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Pill de vidrio pequeño — badges, eyebrows, tags flotantes */
+  .glass-pill {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Etiqueta uppercase tracking amplio, estilo tag de membresía */
+  .eyebrow {
+    @apply text-xs font-light uppercase tracking-[0.3em] text-bone-mute;
+  }
+}
