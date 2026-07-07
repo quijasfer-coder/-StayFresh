@@ -14,6 +14,14 @@ type CookieToSet = { name: string; value: string; options: CookieOptions };
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
+  // Sin credenciales de Supabase configuradas (ej. deploy antes de crear
+  // el proyecto real), no truena el sitio entero — el middleware corre en
+  // casi cada ruta, así que un error aquí tumba hasta las páginas públicas
+  // que no necesitan sesión.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return supabaseResponse;
+  }
+
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
