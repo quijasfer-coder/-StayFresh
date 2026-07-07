@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getPickupDetail } from "@/lib/queries/pickups";
 import { StatusSelector } from "./status-selector";
-import { formatDateEs, formatDateTimeEs, formatPhone } from "@/lib/format";
+import { formatDateEs, formatDateTimeEs, formatPhone, formatMXN } from "@/lib/format";
 
 const CATEGORY_LABEL: Record<string, string> = {
   tenis: "Tenis / sneakers",
@@ -51,14 +51,23 @@ export default async function PickupDetailPage({
         <p className="eyebrow">Piezas ({pickup.total_items})</p>
         <ul className="space-y-2 text-sm">
           {pickup.pickup_items.map((item) => (
-            <li key={item.id} className="flex justify-between border-b border-bone-border/10 pb-2 last:border-0">
+            <li key={item.id} className="flex items-center justify-between gap-3 border-b border-bone-border/10 pb-2 last:border-0">
               <span>
                 {item.quantity}× {CATEGORY_LABEL[item.category] ?? item.category}
                 {item.description && <span className="text-bone-mute"> — {item.description}</span>}
               </span>
+              <span className="text-bone-mute whitespace-nowrap">
+                {item.price_cents != null ? formatMXN(item.price_cents) : "A cotizar"}
+              </span>
             </li>
           ))}
         </ul>
+        <div className="flex items-center justify-between pt-2 border-t border-bone-border/[0.16]">
+          <span className="eyebrow">Total</span>
+          <span className="font-display font-bold text-xl text-accent">
+            {formatMXN(pickup.total_price_cents)}
+          </span>
+        </div>
       </div>
 
       <div className="card rounded-2xl p-6 space-y-3">

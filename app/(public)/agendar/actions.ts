@@ -8,6 +8,7 @@ export type BookingItemInput = {
   category: Database["public"]["Enums"]["item_category"];
   quantity: number;
   description?: string;
+  priceCents?: number | null;
 };
 
 export type BookingPayload = {
@@ -69,7 +70,12 @@ export async function submitBookingAction(
       p_colonia: payload.colonia,
       p_cp: payload.cp || null,
       p_scheduled_date: payload.scheduledDate,
-      p_items: payload.items,
+      p_items: payload.items.map((item) => ({
+        category: item.category,
+        quantity: item.quantity,
+        description: item.description,
+        price_cents: item.priceCents ?? null,
+      })),
     });
 
     if (error) {

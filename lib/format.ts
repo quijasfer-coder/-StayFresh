@@ -46,6 +46,13 @@ export function formatDateEs(value: string | Date): string {
   });
 }
 
+export function formatMXN(cents: number): string {
+  return (cents / 100).toLocaleString("es-MX", {
+    style: "currency",
+    currency: "MXN",
+  });
+}
+
 export function formatDateTimeEs(value: string | Date): string {
   const date = typeof value === "string" ? new Date(value) : value;
   return date.toLocaleString("es-MX", {

@@ -9,6 +9,7 @@ const NAV = [
   { href: "/admin/recolecciones", label: "Recolecciones" },
   { href: "/admin/clientes", label: "Clientes" },
   { href: "/admin/zonas", label: "Zonas" },
+  { href: "/admin/precios", label: "Precios" },
 ];
 
 export default async function AdminLayout({

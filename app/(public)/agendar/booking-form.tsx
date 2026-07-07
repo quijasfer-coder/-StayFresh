@@ -3,6 +3,8 @@
 import { useState, useTransition } from "react";
 import { CheckCircle2, XCircle, Plus, Trash2, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatMXN, pluralizeItems } from "@/lib/format";
+import type { PriceTier } from "@/lib/queries/pricing";
 import {
   checkCoverageAction,
   submitBookingAction,
@@ -19,22 +21,36 @@ const CATEGORY_OPTIONS: { value: BookingItemInput["category"]; label: string }[]
 
 type CoverageStatus = "idle" | "checking" | "covered" | "not_covered";
 
-export function BookingForm() {
+function defaultItemForCategory(
+  category: BookingItemInput["category"],
+  priceTiers: PriceTier[],
+): BookingItemInput {
+  const tiersForCategory = priceTiers.filter((t) => t.category === category);
+  const firstTier = tiersForCategory[0];
+  return firstTier
+    ? { category, quantity: firstTier.quantity, description: "", priceCents: firstTier.price_cents }
+    : { category, quantity: 1, description: "", priceCents: null };
+}
+
+export function BookingForm({ priceTiers }: { priceTiers: PriceTier[] }) {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [colonia, setColonia] = useState("");
   const [cp, setCp] = useState("");
   const [scheduledDate, setScheduledDate] = useState("");
-  const [items, setItems] = useState<BookingItemInput[]>([
-    { category: "tenis", quantity: 1, description: "" },
-  ]);
+  const [items, setItems] = useState<BookingItemInput[]>([defaultItemForCategory("tenis", priceTiers)]);
 
   const [coverage, setCoverage] = useState<CoverageStatus>("idle");
   const [coveragePending, startCoverageCheck] = useTransition();
   const [submitPending, startSubmit] = useTransition();
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<{ pickupId: string; scheduledDate: string } | null>(null);
+  const [success, setSuccess] = useState<{ pickupId: string; scheduledDate: string; totalCents: number } | null>(
+    null,
+  );
+
+  const total = items.reduce((sum, item) => sum + (item.priceCents ?? 0), 0);
+  const hasUnpriced = items.some((item) => item.priceCents == null);
 
   function handleCheckCoverage() {
     if (!colonia && !cp) return;
@@ -54,8 +70,22 @@ export function BookingForm() {
     setItems((prev) => prev.map((item, i) => (i === index ? { ...item, ...patch } : item)));
   }
 
+  function handleCategoryChange(index: number, category: BookingItemInput["category"]) {
+    setItems((prev) => prev.map((item, i) => (i === index ? defaultItemForCategory(category, priceTiers) : item)));
+  }
+
+  function handleTierChange(index: number, quantity: number) {
+    setItems((prev) =>
+      prev.map((item, i) => {
+        if (i !== index) return item;
+        const tier = priceTiers.find((t) => t.category === item.category && t.quantity === quantity);
+        return { ...item, quantity, priceCents: tier?.price_cents ?? null };
+      }),
+    );
+  }
+
   function addItem() {
-    setItems((prev) => [...prev, { category: "tenis", quantity: 1, description: "" }]);
+    setItems((prev) => [...prev, defaultItemForCategory("tenis", priceTiers)]);
   }
 
   function removeItem(index: number) {
@@ -77,7 +107,7 @@ export function BookingForm() {
         items,
       });
       if (result.ok) {
-        setSuccess({ pickupId: result.pickupId, scheduledDate });
+        setSuccess({ pickupId: result.pickupId, scheduledDate, totalCents: total });
       } else {
         setError(result.error);
       }
@@ -85,7 +115,13 @@ export function BookingForm() {
   }
 
   if (success) {
-    return <BookingConfirmation scheduledDate={success.scheduledDate} />;
+    return (
+      <BookingConfirmation
+        scheduledDate={success.scheduledDate}
+        totalCents={success.totalCents}
+        hasUnpriced={hasUnpriced}
+      />
+    );
   }
 
   return (
@@ -189,44 +225,65 @@ export function BookingForm() {
 
         <div className="space-y-3">
           <p className="eyebrow">Piezas a limpiar</p>
-          {items.map((item, index) => (
-            <div key={index} className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-              <select
-                value={item.category}
-                onChange={(e) => updateItem(index, { category: e.target.value as BookingItemInput["category"] })}
-                className={cn(inputClass, "sm:w-48")}
-              >
-                {CATEGORY_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="number"
-                min={1}
-                value={item.quantity}
-                onChange={(e) => updateItem(index, { quantity: Number(e.target.value) })}
-                className={cn(inputClass, "sm:w-24")}
-              />
-              <input
-                value={item.description ?? ""}
-                onChange={(e) => updateItem(index, { description: e.target.value })}
-                placeholder="Descripción (opcional) — ej. Jordan 1 Chicago"
-                className={cn(inputClass, "flex-1")}
-              />
-              {items.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeItem(index)}
-                  className="text-bone-mute hover:text-danger p-2"
-                  aria-label="Quitar pieza"
+          {items.map((item, index) => {
+            const tiersForCategory = priceTiers.filter((t) => t.category === item.category);
+            const hasTiers = tiersForCategory.length > 0;
+
+            return (
+              <div key={index} className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+                <select
+                  value={item.category}
+                  onChange={(e) => handleCategoryChange(index, e.target.value as BookingItemInput["category"])}
+                  className={cn(inputClass, "sm:w-48")}
                 >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-          ))}
+                  {CATEGORY_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+
+                {hasTiers ? (
+                  <select
+                    value={item.quantity}
+                    onChange={(e) => handleTierChange(index, Number(e.target.value))}
+                    className={cn(inputClass, "sm:w-56")}
+                  >
+                    {tiersForCategory.map((tier) => (
+                      <option key={tier.id} value={tier.quantity}>
+                        {pluralizeItems(tier.quantity, tier.category)} — {formatMXN(tier.price_cents)}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    type="number"
+                    min={1}
+                    value={item.quantity}
+                    onChange={(e) => updateItem(index, { quantity: Number(e.target.value) })}
+                    className={cn(inputClass, "sm:w-24")}
+                  />
+                )}
+
+                <input
+                  value={item.description ?? ""}
+                  onChange={(e) => updateItem(index, { description: e.target.value })}
+                  placeholder="Descripción (opcional) — ej. Jordan 1 Chicago"
+                  className={cn(inputClass, "flex-1")}
+                />
+                {items.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeItem(index)}
+                    className="text-bone-mute hover:text-danger p-2"
+                    aria-label="Quitar pieza"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            );
+          })}
           <button
             type="button"
             onClick={addItem}
@@ -234,6 +291,18 @@ export function BookingForm() {
           >
             <Plus className="w-4 h-4" /> Agregar otra pieza
           </button>
+        </div>
+
+        <div className="card rounded-2xl p-5 flex items-center justify-between">
+          <div>
+            <p className="eyebrow">Total estimado</p>
+            {hasUnpriced && (
+              <p className="text-xs text-bone-mute mt-1">
+                Algunas piezas no tienen paquete definido — se cotizan directo.
+              </p>
+            )}
+          </div>
+          <p className="font-display font-bold text-3xl text-accent">{formatMXN(total)}</p>
         </div>
 
         {error && (

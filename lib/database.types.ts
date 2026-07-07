@@ -153,6 +153,7 @@ export type Database = {
           cp: string | null
           address: string | null
           total_items: number
+          total_price_cents: number
           notes: string | null
           created_at: string
           updated_at: string
@@ -168,6 +169,7 @@ export type Database = {
           cp?: string | null
           address?: string | null
           total_items?: number
+          total_price_cents?: number
           notes?: string | null
           created_at?: string
           updated_at?: string
@@ -183,6 +185,7 @@ export type Database = {
           cp?: string | null
           address?: string | null
           total_items?: number
+          total_price_cents?: number
           notes?: string | null
           created_at?: string
           updated_at?: string
@@ -205,6 +208,7 @@ export type Database = {
           quantity: number
           description: string | null
           service_id: string | null
+          price_cents: number | null
           created_at: string
         }
         Insert: {
@@ -214,6 +218,7 @@ export type Database = {
           quantity: number
           description?: string | null
           service_id?: string | null
+          price_cents?: number | null
           created_at?: string
         }
         Update: {
@@ -223,6 +228,7 @@ export type Database = {
           quantity?: number
           description?: string | null
           service_id?: string | null
+          price_cents?: number | null
           created_at?: string
         }
         Relationships: [
@@ -241,6 +247,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      price_tiers: {
+        Row: {
+          id: string
+          category: Database["public"]["Enums"]["item_category"]
+          quantity: number
+          price_cents: number
+          active: boolean
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          category: Database["public"]["Enums"]["item_category"]
+          quantity: number
+          price_cents: number
+          active?: boolean
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          category?: Database["public"]["Enums"]["item_category"]
+          quantity?: number
+          price_cents?: number
+          active?: boolean
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       pickup_status_history: {
         Row: {

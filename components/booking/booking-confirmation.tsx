@@ -1,7 +1,15 @@
 import { PackageCheck } from "lucide-react";
-import { formatDateEs } from "@/lib/format";
+import { formatDateEs, formatMXN } from "@/lib/format";
 
-export function BookingConfirmation({ scheduledDate }: { scheduledDate: string }) {
+export function BookingConfirmation({
+  scheduledDate,
+  totalCents,
+  hasUnpriced,
+}: {
+  scheduledDate: string;
+  totalCents: number;
+  hasUnpriced: boolean;
+}) {
   return (
     <div className="card rounded-2xl p-10 text-center">
       <PackageCheck className="w-10 h-10 text-accent mx-auto mb-4" />
@@ -10,6 +18,16 @@ export function BookingConfirmation({ scheduledDate }: { scheduledDate: string }
         Te esperamos el <span className="text-bone">{formatDateEs(scheduledDate)}</span>. Te
         avisaremos por WhatsApp en cuanto tengamos novedades de tus piezas.
       </p>
+      {totalCents > 0 && (
+        <div className="mt-6 pt-6 border-t border-bone-border/[0.16]">
+          <p className="eyebrow">Total estimado</p>
+          <p className="font-display font-bold text-4xl text-accent mt-1">{formatMXN(totalCents)}</p>
+          <p className="text-xs text-bone-mute mt-2">
+            Se cobra contra entrega.
+            {hasUnpriced && " Algunas piezas se cotizan directo, no están incluidas en este total."}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { listPickups, type PickupStatus } from "@/lib/queries/pickups";
 import { STATUS_LABELS } from "@/components/admin/status-badge";
 import { StatusSelect } from "@/components/admin/status-select";
 import { CopyButton } from "@/components/admin/copy-button";
-import { formatDateEs } from "@/lib/format";
+import { formatDateEs, formatMXN } from "@/lib/format";
 
 export const metadata = { title: "Recolecciones" };
 
@@ -45,6 +45,7 @@ export default async function RecoleccionesPage({
                 <th className="px-5 py-3 whitespace-nowrap">Dirección</th>
                 <th className="px-5 py-3 whitespace-nowrap">Fecha</th>
                 <th className="px-5 py-3 whitespace-nowrap">Piezas</th>
+                <th className="px-5 py-3 whitespace-nowrap">Total</th>
                 <th className="px-5 py-3 whitespace-nowrap">Status</th>
               </tr>
             </thead>
@@ -70,6 +71,9 @@ export default async function RecoleccionesPage({
                   <td className="px-5 py-4 text-bone-mute whitespace-nowrap">
                     {pickup.total_items} {pickup.total_items === 1 ? "pieza" : "piezas"}
                   </td>
+                  <td className="px-5 py-4 whitespace-nowrap">
+                    {pickup.total_price_cents > 0 ? formatMXN(pickup.total_price_cents) : "—"}
+                  </td>
                   <td className="px-5 py-4">
                     <StatusSelect pickupId={pickup.id} status={pickup.status} />
                   </td>
@@ -77,7 +81,7 @@ export default async function RecoleccionesPage({
               ))}
               {pickups.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-5 py-10 text-center text-bone-mute">
+                  <td colSpan={7} className="px-5 py-10 text-center text-bone-mute">
                     No hay recolecciones{status ? ` en status "${STATUS_LABELS[status]}"` : ""}.
                   </td>
                 </tr>
