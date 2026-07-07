@@ -25,6 +25,10 @@ coverage/
 supabase/.temp/
 supabase/.branches/
 
+# Carpeta de assets sin procesar (drop zone) — los que sí se usan se
+# copian a public/ con el nombre/formato correcto.
+/recursos/
+
 # Typescript
 *.tsbuildinfo
 next-env.d.ts
