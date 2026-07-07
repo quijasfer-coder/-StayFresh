@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Truck, Sparkles, PackageCheck, ShieldCheck } from "lucide-react";
 import { SectionTitle } from "@/components/ui/section-title";
+import { CATEGORY_LABEL, CATEGORY_IMAGE, CATEGORY_ORDER } from "@/lib/categories";
 
 const STEPS = [
   { icon: Truck, title: "Recolectamos", body: "Vamos por tus piezas a tu domicilio, dentro de nuestra zona de cobertura." },
@@ -9,8 +10,6 @@ const STEPS = [
   { icon: PackageCheck, title: "Entregamos", body: "En aproximadamente una semana, de vuelta en tu puerta." },
   { icon: ShieldCheck, title: "Pagas al final", body: "Pago contra entrega, con garantía de satisfacción." },
 ];
-
-const CATEGORIES = ["Sneakers", "Botas", "Gorras", "Bolsas"];
 
 export default function HomePage() {
   return (
@@ -67,13 +66,24 @@ export default function HomePage() {
       <section className="container py-20">
         <SectionTitle eyebrow="Catálogo" title="Qué limpiamos" className="mb-12" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {CATEGORIES.map((category) => (
-            <div
+          {CATEGORY_ORDER.map((category) => (
+            <Link
               key={category}
-              className="card rounded-2xl p-8 text-center"
+              href="/servicios"
+              className="card group relative overflow-hidden rounded-2xl aspect-[3/4]"
             >
-              <p className="font-display font-bold uppercase text-2xl">{category}</p>
-            </div>
+              <Image
+                src={CATEGORY_IMAGE[category]}
+                alt={CATEGORY_LABEL[category]}
+                fill
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-ink/10" />
+              <p className="absolute bottom-4 left-0 right-0 text-center font-display font-bold uppercase text-2xl">
+                {CATEGORY_LABEL[category]}
+              </p>
+            </Link>
           ))}
         </div>
       </section>
