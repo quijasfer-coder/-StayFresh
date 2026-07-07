@@ -27,9 +27,19 @@ export function pluralizeItems(count: number, category: string): string {
   return `${count} ${label ?? category}`;
 }
 
+/**
+ * Un string tipo "2026-07-20" (columna `date` de Postgres, sin hora) lo
+ * interpreta el motor de JS como medianoche UTC — en cualquier timezone
+ * detrás de UTC (CDMX incluido) eso se muestra como el día ANTERIOR.
+ * Forzamos mediodía local agregando la hora antes de parsear.
+ */
+function toLocalDate(value: string | Date): Date {
+  if (typeof value !== "string") return value;
+  return /^\d{4}-\d{2}-\d{2}$/.test(value) ? new Date(`${value}T12:00:00`) : new Date(value);
+}
+
 export function formatDateEs(value: string | Date): string {
-  const date = typeof value === "string" ? new Date(value) : value;
-  return date.toLocaleDateString("es-MX", {
+  return toLocalDate(value).toLocaleDateString("es-MX", {
     weekday: "long",
     day: "numeric",
     month: "long",
