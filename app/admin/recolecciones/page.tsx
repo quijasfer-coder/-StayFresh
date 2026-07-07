@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { listPickups, type PickupStatus } from "@/lib/queries/pickups";
-import { StatusBadge, STATUS_LABELS } from "@/components/admin/status-badge";
+import { STATUS_LABELS } from "@/components/admin/status-badge";
+import { StatusSelect } from "@/components/admin/status-select";
+import { CopyButton } from "@/components/admin/copy-button";
 import { formatDateEs } from "@/lib/format";
 
 export const metadata = { title: "Recolecciones" };
@@ -34,46 +36,55 @@ export default async function RecoleccionesPage({
       </div>
 
       <div className="card rounded-2xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left font-mono text-[10px] uppercase tracking-widest text-bone-mute border-b border-bone-border/30">
-              <th className="px-5 py-3">Cliente</th>
-              <th className="px-5 py-3">Colonia</th>
-              <th className="px-5 py-3">Fecha</th>
-              <th className="px-5 py-3">Piezas</th>
-              <th className="px-5 py-3">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pickups.map((pickup) => (
-              <tr
-                key={pickup.id}
-                className="border-b border-bone-border/10 last:border-0 hover:bg-bone/5 transition-colors"
-              >
-                <td className="px-5 py-4">
-                  <Link href={`/admin/recolecciones/${pickup.id}`} className="hover:text-accent">
-                    {pickup.clients?.full_name ?? "—"}
-                  </Link>
-                </td>
-                <td className="px-5 py-4 text-bone-mute">{pickup.colonia}</td>
-                <td className="px-5 py-4 text-bone-mute">{formatDateEs(pickup.scheduled_date)}</td>
-                <td className="px-5 py-4 text-bone-mute">
-                  {pickup.total_items} {pickup.total_items === 1 ? "pieza" : "piezas"}
-                </td>
-                <td className="px-5 py-4">
-                  <StatusBadge status={pickup.status} />
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left font-mono text-[10px] uppercase tracking-widest text-bone-mute border-b border-bone-border/30">
+                <th className="px-5 py-3 whitespace-nowrap">Cliente</th>
+                <th className="px-5 py-3 whitespace-nowrap">Colonia</th>
+                <th className="px-5 py-3 whitespace-nowrap">Dirección</th>
+                <th className="px-5 py-3 whitespace-nowrap">Fecha</th>
+                <th className="px-5 py-3 whitespace-nowrap">Piezas</th>
+                <th className="px-5 py-3 whitespace-nowrap">Status</th>
               </tr>
-            ))}
-            {pickups.length === 0 && (
-              <tr>
-                <td colSpan={5} className="px-5 py-10 text-center text-bone-mute">
-                  No hay recolecciones{status ? ` en status "${STATUS_LABELS[status]}"` : ""}.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {pickups.map((pickup) => (
+                <tr
+                  key={pickup.id}
+                  className="border-b border-bone-border/10 last:border-0 hover:bg-bone/5 transition-colors"
+                >
+                  <td className="px-5 py-4 whitespace-nowrap">
+                    <Link href={`/admin/recolecciones/${pickup.id}`} className="hover:text-accent">
+                      {pickup.clients?.full_name ?? "—"}
+                    </Link>
+                  </td>
+                  <td className="px-5 py-4 text-bone-mute whitespace-nowrap">{pickup.colonia}</td>
+                  <td className="px-5 py-4 text-bone-mute">
+                    <div className="flex items-center gap-1.5 max-w-[220px]">
+                      <span className="truncate">{pickup.address ?? "—"}</span>
+                      {pickup.address && <CopyButton text={pickup.address} />}
+                    </div>
+                  </td>
+                  <td className="px-5 py-4 text-bone-mute whitespace-nowrap">{formatDateEs(pickup.scheduled_date)}</td>
+                  <td className="px-5 py-4 text-bone-mute whitespace-nowrap">
+                    {pickup.total_items} {pickup.total_items === 1 ? "pieza" : "piezas"}
+                  </td>
+                  <td className="px-5 py-4">
+                    <StatusSelect pickupId={pickup.id} status={pickup.status} />
+                  </td>
+                </tr>
+              ))}
+              {pickups.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-5 py-10 text-center text-bone-mute">
+                    No hay recolecciones{status ? ` en status "${STATUS_LABELS[status]}"` : ""}.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

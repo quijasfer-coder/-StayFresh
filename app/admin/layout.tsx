@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LogOut } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
 import { signOutAction } from "@/app/auth/actions";
+import { MobileNav } from "@/components/admin/mobile-nav";
 
 const NAV = [
   { href: "/admin", label: "Dashboard" },
@@ -20,8 +21,9 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-4 z-40 px-4">
-        <nav className="glass-nav container mx-auto flex items-center justify-between gap-3 rounded-xl px-6 py-3">
-          <div className="flex items-center gap-8">
+        <nav className="glass-nav relative container mx-auto flex items-center justify-between gap-3 rounded-xl px-4 sm:px-6 py-3">
+          <div className="flex items-center gap-3 sm:gap-8">
+            <MobileNav items={NAV} />
             <Link href="/admin" className="font-display font-semibold text-lg tracking-tight">
               Stay Fresh
             </Link>
@@ -44,7 +46,8 @@ export default async function AdminLayout({
                 type="submit"
                 className="inline-flex items-center gap-1.5 uppercase tracking-wide text-bone-mute hover:text-accent transition-colors"
               >
-                <LogOut className="w-4 h-4" /> Salir
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline">Salir</span>
               </button>
             </form>
           </div>

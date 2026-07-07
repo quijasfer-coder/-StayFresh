@@ -33,8 +33,8 @@ export function ZoneForm({ zone, onDone }: { zone?: Zone; onDone?: () => void })
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-wrap items-end gap-3">
-      <div>
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row sm:flex-wrap sm:items-end gap-3">
+      <div className="w-full sm:w-auto">
         <label className="block font-mono text-[10px] uppercase tracking-widest text-bone-mute mb-1.5">
           Colonia
         </label>
@@ -42,33 +42,34 @@ export function ZoneForm({ zone, onDone }: { zone?: Zone; onDone?: () => void })
           required
           value={colonia}
           onChange={(e) => setColonia(e.target.value)}
-          className="bg-ink-surface border border-bone-border/40 rounded-lg px-3 py-2 text-sm focus:border-accent focus:outline-none"
+          className="w-full sm:w-56 bg-ink-surface border border-bone-border/40 rounded-lg px-3 py-2 text-sm focus:border-accent focus:outline-none"
         />
       </div>
-      <div>
+      <div className="w-full sm:w-auto">
         <label className="block font-mono text-[10px] uppercase tracking-widest text-bone-mute mb-1.5">
           CP
         </label>
         <input
           value={cp}
           onChange={(e) => setCp(e.target.value)}
-          className="bg-ink-surface border border-bone-border/40 rounded-lg px-3 py-2 text-sm w-24 focus:border-accent focus:outline-none"
+          className="w-full sm:w-24 bg-ink-surface border border-bone-border/40 rounded-lg px-3 py-2 text-sm focus:border-accent focus:outline-none"
         />
       </div>
-      <div>
+      <div className="w-full sm:w-auto">
         <label className="block font-mono text-[10px] uppercase tracking-widest text-bone-mute mb-1.5">
-          Alcaldía
+          Alcaldía o municipio
         </label>
         <input
           value={alcaldia}
           onChange={(e) => setAlcaldia(e.target.value)}
-          className="bg-ink-surface border border-bone-border/40 rounded-lg px-3 py-2 text-sm focus:border-accent focus:outline-none"
+          placeholder="Ej. Cuauhtémoc, Naucalpan..."
+          className="w-full sm:w-56 bg-ink-surface border border-bone-border/40 rounded-lg px-3 py-2 text-sm focus:border-accent focus:outline-none"
         />
       </div>
       <button
         type="submit"
         disabled={pending}
-        className="btn-primary gap-1.5 px-4 py-2 text-xs disabled:opacity-50"
+        className="btn-primary gap-1.5 px-4 py-2 text-xs disabled:opacity-50 w-full sm:w-auto"
       >
         {zone ? <Pencil className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
         {pending ? "Guardando…" : zone ? "Guardar" : "Agregar zona"}

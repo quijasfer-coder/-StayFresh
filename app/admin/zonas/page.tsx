@@ -24,28 +24,30 @@ export default async function ZonasPage() {
       </div>
 
       <div className="card rounded-2xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left font-mono text-[10px] uppercase tracking-widest text-bone-mute border-b border-bone-border/30">
-              <th className="px-5 py-3">Colonia</th>
-              <th className="px-5 py-3">CP</th>
-              <th className="px-5 py-3">Alcaldía</th>
-              <th className="px-5 py-3">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {zones.map((zone) => (
-              <ZoneRow key={zone.id} zone={zone} />
-            ))}
-            {zones.length === 0 && (
-              <tr>
-                <td colSpan={4} className="px-5 py-10 text-center text-bone-mute">
-                  Sin zonas configuradas todavía.
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left font-mono text-[10px] uppercase tracking-widest text-bone-mute border-b border-bone-border/30">
+                <th className="px-5 py-3 whitespace-nowrap">Colonia</th>
+                <th className="px-5 py-3 whitespace-nowrap">CP</th>
+                <th className="px-5 py-3 whitespace-nowrap">Alcaldía o municipio</th>
+                <th className="px-5 py-3 whitespace-nowrap">Status</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {zones.map((zone) => (
+                <ZoneRow key={zone.id} zone={zone} />
+              ))}
+              {zones.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="px-5 py-10 text-center text-bone-mute">
+                    Sin zonas configuradas todavía.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

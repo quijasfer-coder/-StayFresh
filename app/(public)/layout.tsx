@@ -16,7 +16,7 @@ export default function PublicLayout({
           <div className="flex items-center gap-3 sm:gap-8 text-sm">
             <Link
               href="/servicios"
-              className="hidden sm:inline uppercase tracking-wide text-bone-mute hover:text-accent transition-colors"
+              className="uppercase tracking-wide text-bone-mute hover:text-accent transition-colors"
             >
               Servicios
             </Link>
