@@ -34,14 +34,14 @@ export default async function ClienteDetailPage({
       </Link>
 
       <div>
-        <h1 className="font-display text-3xl">{client.full_name}</h1>
+        <h1 className="font-display font-bold text-3xl">{client.full_name}</h1>
         <p className="text-bone-mute mt-1">
           {formatPhone(client.phone)} · {client.colonia ?? "Sin colonia"}
         </p>
         {client.address && <p className="text-bone-mute text-sm mt-1">{client.address}</p>}
       </div>
 
-      <div className="glass rounded-2xl p-6">
+      <div className="card rounded-2xl p-6">
         <p className="eyebrow mb-4">Control de pares — acumulado histórico</p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {Object.entries(CATEGORY_LABEL).map(([category, label]) => (
@@ -53,7 +53,7 @@ export default async function ClienteDetailPage({
         </div>
       </div>
 
-      <div className="glass rounded-2xl p-6">
+      <div className="card rounded-2xl p-6">
         <p className="eyebrow mb-4">Historial de recolecciones ({pickups.length})</p>
         <ul className="space-y-4">
           {pickups.map((pickup) => (

@@ -17,24 +17,23 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Core — negro/blanco de la identidad Stay Fresh
+        // Core — negro profundo tipo Ravox (no plano)
         ink: {
-          DEFAULT: "#000000",
-          off: "#0A0A0A",
-          surface: "#1A1A1A",
+          DEFAULT: "#090808",
+          off: "#050505",
+          surface: "#101010",
         },
         bone: {
           DEFAULT: "#FFFFFF",
-          mute: "#A8A8A8",
-          border: "#3A3A3A",
+          mute: "#BCBCBC",
+          border: "#BCBCBC",
         },
-        // Acento — un solo color selectivo sobre la base B&N (streetwear,
-        // no pastel). Placeholder hasta confirmar hex real de los assets
-        // de marca en `Cara Rara/Stay Fresh/assets/`.
+        // Acento — lima ácida (referencia: template Ravox), reemplaza el
+        // naranja anterior. Un solo color selectivo sobre la base B&N.
         accent: {
-          DEFAULT: "#FF4400",
-          deep: "#CC3300",
-          wash: "#FFE5D9",
+          DEFAULT: "#CCFF00",
+          deep: "#9FCC00",
+          wash: "#F4FFCC",
         },
         // Functional
         danger: "#FF5757",
@@ -85,7 +84,7 @@ const config: Config = {
       },
       backgroundImage: {
         "spotlight":
-          "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,68,0,0.18), rgba(0,0,0,0) 70%)",
+          "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(204,255,0,0.14), rgba(0,0,0,0) 70%)",
         "grain":
           "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='3' /></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>\")",
       },

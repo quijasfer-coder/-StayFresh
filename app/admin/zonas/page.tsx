@@ -12,18 +12,18 @@ export default async function ZonasPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl">Zonas de cobertura</h1>
+        <h1 className="font-display font-bold uppercase text-3xl">Zonas de cobertura</h1>
         <p className="text-bone-mute mt-1 text-sm">
           Agrega o desactiva colonias/CP sin necesidad de un redeploy — se refleja de inmediato en el formulario público de agendamiento.
         </p>
       </div>
 
-      <div className="glass rounded-2xl p-6">
+      <div className="card rounded-2xl p-6">
         <p className="eyebrow mb-4">Agregar zona</p>
         <ZoneForm />
       </div>
 
-      <div className="glass rounded-2xl overflow-hidden">
+      <div className="card rounded-2xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left font-mono text-[10px] uppercase tracking-widest text-bone-mute border-b border-bone-border/30">

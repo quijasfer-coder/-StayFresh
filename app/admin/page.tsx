@@ -26,11 +26,11 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-display text-3xl">Dashboard</h1>
+        <h1 className="font-display font-bold uppercase text-3xl">Dashboard</h1>
         <p className="text-bone-mute mt-1">{pendingCount ?? 0} recolecciones activas</p>
       </div>
 
-      <div className="glass rounded-2xl p-6">
+      <div className="card rounded-2xl p-6">
         <p className="eyebrow mb-4">Próximos 7 días</p>
         <ul className="space-y-3">
           {(upcoming ?? []).map((pickup) => (

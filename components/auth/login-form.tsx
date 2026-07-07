@@ -14,7 +14,7 @@ export function LoginForm({ next }: { next?: string }) {
   return (
     <div>
       <div className="text-center mb-10">
-        <h1 className="font-display text-4xl leading-[0.95]">Stay Fresh</h1>
+        <h1 className="font-display font-bold uppercase text-4xl leading-[0.95]">Stay Fresh</h1>
         <p className="text-sm text-bone-mute mt-4">
           Acceso interno del equipo.
         </p>
@@ -77,7 +77,7 @@ export function LoginForm({ next }: { next?: string }) {
         <button
           type="submit"
           disabled={pending}
-          className="group w-full inline-flex items-center justify-center gap-2 bg-bone text-ink px-6 py-3.5 rounded-full font-medium hover:bg-accent hover:text-bone transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary group w-full px-6 py-3.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {pending ? "Iniciando..." : "Iniciar sesión"}
           {!pending && (

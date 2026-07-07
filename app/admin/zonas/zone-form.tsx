@@ -68,7 +68,7 @@ export function ZoneForm({ zone, onDone }: { zone?: Zone; onDone?: () => void })
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex items-center gap-1.5 bg-bone text-ink rounded-full px-4 py-2 text-sm font-medium hover:bg-accent hover:text-bone transition-colors disabled:opacity-50"
+        className="btn-primary gap-1.5 px-4 py-2 text-xs disabled:opacity-50"
       >
         {zone ? <Pencil className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
         {pending ? "Guardando…" : zone ? "Guardar" : "Agregar zona"}

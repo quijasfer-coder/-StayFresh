@@ -19,8 +19,8 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="glass-nav sticky top-0 z-40">
-        <nav className="container flex items-center justify-between py-4">
+      <header className="sticky top-4 z-40 px-4">
+        <nav className="glass-nav container mx-auto flex items-center justify-between gap-3 rounded-xl px-6 py-3">
           <div className="flex items-center gap-8">
             <Link href="/admin" className="font-display font-semibold text-lg tracking-tight">
               Stay Fresh
@@ -30,7 +30,7 @@ export default async function AdminLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-bone-mute hover:text-bone transition-colors"
+                  className="uppercase tracking-wide text-bone-mute hover:text-accent transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -42,7 +42,7 @@ export default async function AdminLayout({
             <form action={signOutAction}>
               <button
                 type="submit"
-                className="inline-flex items-center gap-1.5 text-bone-mute hover:text-bone transition-colors"
+                className="inline-flex items-center gap-1.5 uppercase tracking-wide text-bone-mute hover:text-accent transition-colors"
               >
                 <LogOut className="w-4 h-4" /> Salir
               </button>

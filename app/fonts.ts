@@ -1,17 +1,18 @@
-import { Sora, Inter, JetBrains_Mono } from "next/font/google";
+import { Kanit, Teko, JetBrains_Mono } from "next/font/google";
 
-// Display — geométrica y limpia, para el look glassmorphism/minimalista
-// tipo Apple (paneles de vidrio, capas translúcidas). Reemplaza a Anton
-// (bold streetwear condensada) que no encajaba con esta dirección visual.
-export const sora = Sora({
+// Display — condensada y alta, para headlines de impacto (estilo template
+// Ravox: números/uppercase gigantes). Reemplaza a Sora.
+export const teko = Teko({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-display",
   display: "swap",
 });
 
-export const inter = Inter({
+// Body/UI — geométrica, usada también en nav, botones y labels uppercase.
+export const kanit = Kanit({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-body",
   display: "swap",
 });

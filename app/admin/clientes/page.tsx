@@ -11,9 +11,9 @@ export default async function ClientesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl">Clientes</h1>
+      <h1 className="font-display font-bold uppercase text-3xl">Clientes</h1>
 
-      <div className="glass rounded-2xl overflow-hidden">
+      <div className="card rounded-2xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left font-mono text-[10px] uppercase tracking-widest text-bone-mute border-b border-bone-border/30">

@@ -91,7 +91,7 @@ export function BookingForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Cobertura primero — el resto del form solo se habilita si está cubierta */}
-      <div className="glass rounded-2xl p-6 space-y-4">
+      <div className="card rounded-2xl p-6 space-y-4">
         <p className="eyebrow">Paso 1 · ¿Llegamos a tu zona?</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Colonia">
@@ -121,7 +121,7 @@ export function BookingForm() {
           type="button"
           onClick={handleCheckCoverage}
           disabled={coveragePending || (!colonia && !cp)}
-          className="inline-flex items-center gap-2 bg-bone text-ink rounded-full px-5 py-2.5 text-sm font-medium hover:bg-accent hover:text-bone transition-colors disabled:opacity-50"
+          className="btn-outline px-5 py-2.5 text-xs disabled:opacity-50"
         >
           {coveragePending ? "Verificando…" : "Verificar cobertura"}
         </button>
@@ -246,7 +246,7 @@ export function BookingForm() {
         <button
           type="submit"
           disabled={submitPending}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-accent text-bone rounded-full px-6 py-3.5 font-medium hover:bg-accent-deep transition-colors disabled:opacity-50"
+          className="btn-primary w-full sm:w-auto px-8 py-3.5 text-sm disabled:opacity-50"
         >
           {submitPending ? "Agendando…" : "Confirmar recolecta"}
         </button>

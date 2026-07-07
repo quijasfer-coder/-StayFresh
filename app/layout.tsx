@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { sora, inter, mono } from "./fonts";
+import { teko, kanit, mono } from "./fonts";
 import { cn } from "@/lib/utils";
-import { BackgroundOrbs } from "@/components/ui/background-orbs";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,10 +26,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={cn(sora.variable, inter.variable, mono.variable, "dark")}
+      className={cn(teko.variable, kanit.variable, mono.variable, "dark")}
     >
       <body className="bg-ink text-bone font-body min-h-screen">
-        <BackgroundOrbs />
         {children}
       </body>
     </html>

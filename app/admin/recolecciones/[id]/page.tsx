@@ -34,7 +34,7 @@ export default async function PickupDetailPage({
       </Link>
 
       <div>
-        <h1 className="font-display text-3xl">{pickup.clients.full_name}</h1>
+        <h1 className="font-display font-bold text-3xl">{pickup.clients.full_name}</h1>
         <p className="text-bone-mute mt-1">
           {formatPhone(pickup.clients.phone)} · {pickup.colonia}
           {pickup.cp ? ` (${pickup.cp})` : ""}
@@ -42,12 +42,12 @@ export default async function PickupDetailPage({
         {pickup.address && <p className="text-bone-mute text-sm mt-1">{pickup.address}</p>}
       </div>
 
-      <div className="glass rounded-2xl p-6 space-y-4">
+      <div className="card rounded-2xl p-6 space-y-4">
         <p className="eyebrow">Status</p>
         <StatusSelector pickupId={pickup.id} currentStatus={pickup.status} />
       </div>
 
-      <div className="glass rounded-2xl p-6 space-y-4">
+      <div className="card rounded-2xl p-6 space-y-4">
         <p className="eyebrow">Piezas ({pickup.total_items})</p>
         <ul className="space-y-2 text-sm">
           {pickup.pickup_items.map((item) => (
@@ -61,7 +61,7 @@ export default async function PickupDetailPage({
         </ul>
       </div>
 
-      <div className="glass rounded-2xl p-6 space-y-3">
+      <div className="card rounded-2xl p-6 space-y-3">
         <p className="eyebrow">Fecha agendada</p>
         <p className="text-sm">{formatDateEs(pickup.scheduled_date)}</p>
         {pickup.notes && (
@@ -72,7 +72,7 @@ export default async function PickupDetailPage({
         )}
       </div>
 
-      <div className="glass rounded-2xl p-6 space-y-3">
+      <div className="card rounded-2xl p-6 space-y-3">
         <p className="eyebrow">Historial</p>
         <ul className="space-y-2 text-sm">
           {pickup.pickup_status_history

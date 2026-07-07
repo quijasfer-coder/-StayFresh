@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Truck, Sparkles, PackageCheck, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Truck, Sparkles, PackageCheck, ShieldCheck } from "lucide-react";
+import { SectionTitle } from "@/components/ui/section-title";
 
 const STEPS = [
   { icon: Truck, title: "Recolectamos", body: "Vamos por tus piezas a tu domicilio, dentro de nuestra zona de cobertura." },
@@ -13,36 +14,37 @@ const CATEGORIES = ["Sneakers", "Botas", "Gorras", "Bolsas"];
 export default function HomePage() {
   return (
     <>
-      <section className="container pt-20 pb-24">
+      <section className="container pt-16 sm:pt-24 pb-24">
         <span className="glass-pill eyebrow inline-block rounded-full px-4 py-2">
           Lavado profesional de sneakers · CDMX
         </span>
-        <h1 className="font-display font-semibold text-5xl md:text-7xl leading-[0.95] mt-6 max-w-3xl">
-          Tratamos tus tenis
+        <h1 className="font-display font-bold uppercase leading-[0.9] mt-6 text-6xl sm:text-8xl md:text-[9rem]">
+          Tratamos
           <br />
-          <span className="text-accent">como lo que son.</span>
+          tus tenis
+          <br />
+          <span className="text-outline-accent">como lo que son.</span>
         </h1>
-        <p className="text-bone-mute max-w-lg mt-6 text-lg">
+        <p className="text-bone-mute max-w-lg mt-8 text-lg">
           No somos una tintorería. Cada par recibe el producto y la técnica
           que su material necesita — recolecta a domicilio, pago contra
           entrega, garantía de satisfacción.
         </p>
-        <Link
-          href="/agendar"
-          className="group inline-flex items-center gap-2 bg-bone text-ink rounded-full px-6 py-3.5 font-medium mt-8 hover:bg-accent hover:text-bone transition-colors"
-        >
+        <Link href="/agendar" className="btn-primary px-8 py-4 mt-8 text-sm">
           Agendar mi recolecta
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+          <ArrowUpRight className="w-4 h-4" />
         </Link>
       </section>
 
       <section className="container py-20">
-        <h2 className="eyebrow mb-8">Cómo funciona</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <SectionTitle eyebrow="El proceso" title="Cómo funciona" className="mb-12" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {STEPS.map(({ icon: Icon, title, body }) => (
-            <div key={title} className="glass rounded-3xl p-6">
-              <Icon className="w-6 h-6 text-accent mb-4" />
-              <h3 className="font-display font-semibold text-xl mb-2">{title}</h3>
+            <div key={title} className="card rounded-2xl p-6">
+              <div className="w-14 h-14 rounded-lg bg-ink flex items-center justify-center mb-5">
+                <Icon className="w-6 h-6 text-accent" />
+              </div>
+              <h3 className="font-display font-bold uppercase text-xl mb-2">{title}</h3>
               <p className="text-sm text-bone-mute">{body}</p>
             </div>
           ))}
@@ -50,34 +52,16 @@ export default function HomePage() {
       </section>
 
       <section className="container py-20">
-        <h2 className="eyebrow mb-8">Qué limpiamos</h2>
+        <SectionTitle eyebrow="Catálogo" title="Qué limpiamos" className="mb-12" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {CATEGORIES.map((category) => (
             <div
               key={category}
-              className="glass rounded-3xl p-8 text-center hover:border-accent/50 transition-colors"
+              className="card rounded-2xl p-8 text-center"
             >
-              <p className="font-display font-semibold text-2xl">{category}</p>
+              <p className="font-display font-bold uppercase text-2xl">{category}</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className="container pb-24">
-        <div className="glass rounded-3xl p-10 md:p-16 text-center">
-          <h2 className="font-display font-semibold text-3xl md:text-4xl mb-4">
-            ¿Listo para agendar tu recolecta?
-          </h2>
-          <p className="text-bone-mute mb-8">
-            Dinos qué necesitas limpiar y checamos si estamos en tu zona.
-          </p>
-          <Link
-            href="/agendar"
-            className="inline-flex items-center gap-2 bg-bone text-ink rounded-full px-6 py-3.5 font-medium hover:bg-accent hover:text-bone transition-colors"
-          >
-            Agendar ahora
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
       </section>
     </>
