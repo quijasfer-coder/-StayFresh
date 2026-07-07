@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatMXN, pluralizeItems } from "@/lib/format";
 import { togglePriceTierActiveAction } from "./actions";
@@ -43,9 +44,9 @@ export function PriceTierRow({ tier }: { tier: Tier }) {
           <button
             type="button"
             onClick={() => setEditing(true)}
-            className="text-xs text-bone-mute hover:text-bone whitespace-nowrap"
+            className="inline-flex items-center gap-1 rounded-full border border-accent/40 px-2.5 py-1 text-xs text-accent hover:bg-accent hover:text-ink transition-colors whitespace-nowrap"
           >
-            Editar
+            <Pencil className="w-3 h-3" /> Editar
           </button>
           <button
             type="button"
