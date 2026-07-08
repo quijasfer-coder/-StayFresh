@@ -28,6 +28,17 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-ink/10 via-ink/60 to-ink" />
         </div>
 
+        <div className="absolute top-6 sm:top-10 left-1/2 -translate-x-1/2 w-40 sm:w-56">
+          <Image
+            src="/images/stay-fresh-logo.png"
+            alt="Stay Fresh"
+            width={1080}
+            height={1350}
+            className="w-full h-auto"
+            priority
+          />
+        </div>
+
         <div className="container min-h-[92vh] sm:min-h-screen flex flex-col justify-end pb-16 sm:pb-24 pt-16">
           <span className="glass-pill eyebrow inline-block rounded-full px-4 py-2 w-fit">
             Lavado profesional de sneakers · CDMX
@@ -49,8 +60,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="container py-20">
-        <VideoShowcase src="/videos/animo-showcase-stream-1080p.webm" logoSrc="/images/stay-fresh-logo.png" />
+      <section className="pt-0 pb-12 sm:pb-20">
+        <VideoShowcase src="/videos/animo-showcase-stream-1080p.webm" />
       </section>
 
       <section className="container py-20">
