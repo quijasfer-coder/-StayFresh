@@ -28,7 +28,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-ink/10 via-ink/60 to-ink" />
         </div>
 
-        <div className="absolute top-6 sm:top-10 left-1/2 -translate-x-1/2 w-40 sm:w-56">
+        <div className="absolute top-6 sm:top-10 left-1/2 -translate-x-1/2 w-60 sm:w-[336px]">
           <Image
             src="/images/stay-fresh-logo.png"
             alt="Stay Fresh"
