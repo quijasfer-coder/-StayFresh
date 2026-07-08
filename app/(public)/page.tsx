@@ -73,7 +73,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {STEPS.map(({ icon, title, body }) => (
             <div key={title} className="card rounded-2xl p-6 relative min-h-[220px] overflow-hidden">
-              <div className="absolute -top-2 -right-2 w-28 h-28 sm:w-32 sm:h-32">
+              <div className="absolute top-4 right-4 w-28 h-28 sm:w-32 sm:h-32">
                 <Image src={icon} alt="" fill sizes="128px" className="object-contain" />
               </div>
               <div className="relative pr-16 sm:pr-20">
