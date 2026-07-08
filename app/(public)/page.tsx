@@ -41,17 +41,17 @@ export default function HomePage() {
 
         <div className="container min-h-[92vh] sm:min-h-screen flex flex-col justify-end pb-16 sm:pb-24 pt-16">
           <span className="glass-pill eyebrow inline-block rounded-full px-4 py-2 w-fit">
-            Lavado profesional de sneakers · CDMX
+            Cuidado experto a domicilio · CDMX
           </span>
           <h1 className="font-display font-bold uppercase leading-[0.95] mt-6 text-4xl sm:text-6xl md:text-7xl">
-            Tratamos tus tenis
+            Cuidamos lo que amas
             <br />
-            <span className="text-outline-accent">como lo que son.</span>
+            <span className="text-accent">para que dure más.</span>
           </h1>
           <p className="text-bone-mute max-w-lg mt-6 text-lg">
-            No somos una tintorería. Cada par recibe el producto y la técnica
-            que su material necesita — recolecta a domicilio, pago contra
-            entrega, garantía de satisfacción.
+            Tenis, botas, gorras y bolsas reciben el trato experto que se
+            merecen — recolecta a domicilio, pago contra entrega, garantía
+            de satisfacción.
           </p>
           <Link
             href="/agendar"
@@ -72,12 +72,14 @@ export default function HomePage() {
         <SectionTitle eyebrow="El proceso" title="Cómo funciona" className="mb-12" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {STEPS.map(({ icon, title, body }) => (
-            <div key={title} className="card rounded-2xl p-6">
-              <div className="w-16 h-16 relative mb-5">
-                <Image src={icon} alt="" fill sizes="64px" className="object-contain" />
+            <div key={title} className="card rounded-2xl p-6 relative min-h-[220px] overflow-hidden">
+              <div className="absolute -top-2 -right-2 w-28 h-28 sm:w-32 sm:h-32">
+                <Image src={icon} alt="" fill sizes="128px" className="object-contain" />
               </div>
-              <h3 className="font-display font-bold uppercase text-xl mb-2">{title}</h3>
-              <p className="text-sm text-bone-mute">{body}</p>
+              <div className="relative pr-16 sm:pr-20">
+                <h3 className="font-display font-bold uppercase text-xl mb-2 mt-16 sm:mt-20">{title}</h3>
+                <p className="text-sm text-bone-mute">{body}</p>
+              </div>
             </div>
           ))}
         </div>
