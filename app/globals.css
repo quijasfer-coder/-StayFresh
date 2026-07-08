@@ -5,7 +5,7 @@
 @layer base {
   :root {
     /* Stay Fresh — negro profundo + acento lima ácida (ref. template Ravox) */
-    --background: 0 0% 3%;
+    --background: 240 6% 7%;
     --foreground: 0 0% 100%;
 
     --card: 0 0% 6%;
@@ -67,11 +67,18 @@
     text-wrap: pretty;
   }
 
+  /* Difumina los bordes de un media (video/imagen) hacia el fondo de la
+     página en vez de recortarlo en un rectángulo duro — vignette suave. */
+  .fade-edges {
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, black 60%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, black 60%, transparent 100%);
+  }
+
   /* Texto con contorno en acento sobre relleno negro — flourish de hero
      (referencia: ab-hero-title-right del template Ravox). Solo usar en
      tamaños grandes (48px+), un contorno de 2px se pierde en texto chico. */
   .text-outline-accent {
-    color: #090808;
+    color: #111113;
     text-shadow:
       -2px -2px 0 theme("colors.accent.DEFAULT"),
       2px -2px 0 theme("colors.accent.DEFAULT"),
@@ -97,7 +104,7 @@
   /* Nav flotante sticky — fondo casi opaco + blur leve para legibilidad
      sobre contenido al hacer scroll. */
   .glass-nav {
-    background: rgba(9, 8, 8, 0.82);
+    background: rgba(17, 17, 19, 0.82);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(188, 188, 188, 0.14);
@@ -125,7 +132,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: var(--ab-fill, #090808);
+    background: var(--ab-fill, #111113);
     clip-path: polygon(-10% 100%, 110% 100%, 110% 100%, -10% 100%);
     transition: clip-path 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
@@ -145,7 +152,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: #090808;
+    background: #111113;
     clip-path: polygon(-10% 100%, 110% 100%, 110% 100%, -10% 100%);
     transition: clip-path 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
   }

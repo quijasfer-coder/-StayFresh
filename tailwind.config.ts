@@ -19,7 +19,7 @@ const config: Config = {
       colors: {
         // Core — negro profundo tipo Ravox (no plano)
         ink: {
-          DEFAULT: "#090808",
+          DEFAULT: "#111113",
           off: "#050505",
           surface: "#101010",
         },

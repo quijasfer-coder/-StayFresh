@@ -49,6 +49,17 @@ export default function HomePage() {
       </section>
 
       <section className="container py-20">
+        <video
+          src="/videos/animo-showcase-stream-1080p.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-auto fade-edges"
+        />
+      </section>
+
+      <section className="container py-20">
         <SectionTitle eyebrow="El proceso" title="Cómo funciona" className="mb-12" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {STEPS.map(({ icon: Icon, title, body }) => (
