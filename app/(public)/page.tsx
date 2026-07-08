@@ -55,7 +55,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/agendar"
-            className="group relative isolate inline-flex w-fit items-center justify-center gap-2 overflow-hidden rounded-full px-8 py-4 mt-8 text-sm font-semibold uppercase tracking-wide text-bone transition-transform duration-300 hover:scale-[1.03]"
+            className="group relative isolate inline-flex w-fit items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-full px-8 py-9 mt-8 text-sm font-semibold uppercase tracking-wide text-bone transition-transform duration-300 hover:scale-[1.03]"
           >
             <Image src="/images/boton.png" alt="" fill sizes="320px" className="-z-10 object-cover" />
             Agendar mi recolecta
