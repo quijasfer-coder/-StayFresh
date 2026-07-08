@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Truck, Sparkles, PackageCheck, ShieldCheck } from "lucide-react";
 import { SectionTitle } from "@/components/ui/section-title";
+import { VideoShowcase } from "@/components/ui/video-showcase";
 import { CATEGORY_LABEL, CATEGORY_IMAGE, CATEGORY_ORDER } from "@/lib/categories";
 
 const STEPS = [
@@ -49,23 +50,7 @@ export default function HomePage() {
       </section>
 
       <section className="container py-20">
-        <div className="relative">
-          <video
-            src="/videos/animo-showcase-stream-1080p.webm"
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-auto fade-edges"
-          />
-          <Image
-            src="/images/stay-fresh-logo.png"
-            alt="Stay Fresh"
-            width={1080}
-            height={1350}
-            className="absolute left-[6%] top-1/2 -translate-y-1/2 w-[26%] sm:w-[20%] h-auto pointer-events-none select-none"
-          />
-        </div>
+        <VideoShowcase src="/videos/animo-showcase-stream-1080p.webm" logoSrc="/images/stay-fresh-logo.png" />
       </section>
 
       <section className="container py-20">
