@@ -49,14 +49,23 @@ export default function HomePage() {
       </section>
 
       <section className="container py-20">
-        <video
-          src="/videos/animo-showcase-stream-1080p.webm"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-auto fade-edges"
-        />
+        <div className="relative">
+          <video
+            src="/videos/animo-showcase-stream-1080p.webm"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-auto fade-edges"
+          />
+          <Image
+            src="/images/stay-fresh-logo.png"
+            alt="Stay Fresh"
+            width={1080}
+            height={1350}
+            className="absolute left-[6%] top-1/2 -translate-y-1/2 w-[26%] sm:w-[20%] h-auto pointer-events-none select-none"
+          />
+        </div>
       </section>
 
       <section className="container py-20">
