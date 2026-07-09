@@ -28,7 +28,7 @@ export default function RootLayout({
       lang="es"
       className={cn(poppinsDisplay.variable, poppinsBody.variable, mono.variable)}
     >
-      <body className="bg-ink text-bone font-body min-h-screen">
+      <body className="bg-ink text-bone font-body min-h-dvh">
         {children}
       </body>
     </html>

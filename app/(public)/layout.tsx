@@ -7,7 +7,7 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-dvh flex flex-col">
       <header className="sticky top-4 z-40 px-4">
         <nav className="glass-nav container mx-auto flex items-center justify-between gap-3 rounded-xl px-6 py-3">
           <Link href="/" className="font-display font-semibold text-xl tracking-tight whitespace-nowrap">
