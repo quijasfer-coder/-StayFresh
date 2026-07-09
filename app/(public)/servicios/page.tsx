@@ -26,14 +26,14 @@ export default async function ServiciosPage() {
               sizes="(max-width: 640px) 100vw, 50vw"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
             <div className="relative p-6">
               <span className="font-mono text-[10px] uppercase tracking-widest text-accent">
                 {CATEGORY_LABEL[service.category] ?? service.category}
               </span>
-              <h2 className="font-display font-bold uppercase text-2xl mt-2">{service.name}</h2>
+              <h2 className="font-display font-bold uppercase text-2xl mt-2 text-white">{service.name}</h2>
               {service.description && (
-                <p className="text-sm text-bone-mute mt-2">{service.description}</p>
+                <p className="text-sm text-white/70 mt-2">{service.description}</p>
               )}
             </div>
           </div>

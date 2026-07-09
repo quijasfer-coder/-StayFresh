@@ -15,7 +15,7 @@ export function PageBackground() {
         sizes="100vw"
         className="object-cover opacity-15"
       />
-      <div className="absolute inset-0 bg-ink/85" />
+      <div className="absolute inset-0 bg-black/70" />
     </div>
   );
 }

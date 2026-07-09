@@ -1,18 +1,18 @@
-import { Kanit, Teko, JetBrains_Mono } from "next/font/google";
+import { Poppins, JetBrains_Mono } from "next/font/google";
 
-// Display — condensada y alta, para headlines de impacto (estilo template
-// Ravox: números/uppercase gigantes). Reemplaza a Sora.
-export const teko = Teko({
+// Geométrica y redondeada — el alternativa libre más cercana a Gilroy
+// (misma construcción circular en la "o"/"a", terminaciones suaves).
+// Se usa la misma familia para display y body, solo cambian los pesos.
+export const poppinsDisplay = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
 
-// Body/UI — geométrica, usada también en nav, botones y labels uppercase.
-export const kanit = Kanit({
+export const poppinsBody = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600"],
   variable: "--font-body",
   display: "swap",
 });

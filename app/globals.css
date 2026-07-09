@@ -4,36 +4,36 @@
 
 @layer base {
   :root {
-    /* Stay Fresh — negro profundo + acento lima ácida (ref. template Ravox) */
-    --background: 240 6% 7%;
-    --foreground: 0 0% 100%;
+    /* Stay Fresh — soft UI neumórfico claro + acento naranja */
+    --background: 225 16% 90%;        /* #E2E4EA */
+    --foreground: 220 18% 27%;        /* #3D4557 */
 
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 100%;
+    --card: 213 30% 96%;              /* #F2F5F9 */
+    --card-foreground: 220 18% 27%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 213 30% 97%;
+    --popover-foreground: 220 18% 27%;
 
-    --primary: 75 100% 50%;           /* Accent #CCFF00 */
-    --primary-foreground: 0 0% 4%;
+    --primary: 23 100% 63%;           /* Accent #FF8A42 */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 6%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 225 16% 90%;
+    --secondary-foreground: 220 18% 27%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 74%;     /* Bone mute #BCBCBC */
+    --muted: 214 22% 88%;
+    --muted-foreground: 220 12% 52%;  /* Bone mute #8791A6 */
 
-    --accent: 75 100% 50%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 23 100% 63%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 100% 67%;
+    --destructive: 358 74% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 74%;               /* #BCBCBC, usado con opacidad baja */
-    --input: 0 0% 15%;
-    --ring: 75 100% 50%;
+    --border: 216 22% 80%;            /* #C7D0DC, usado con opacidad baja */
+    --input: 213 30% 96%;
+    --ring: 23 100% 63%;
 
-    --radius: 1rem;
+    --radius: 1.25rem;
   }
 }
 
@@ -50,9 +50,9 @@
     text-rendering: optimizeLegibility;
   }
   ::selection {
-    @apply bg-accent text-ink;
+    @apply bg-accent text-white;
   }
-  /* Kanit/Teko cargan pesos específicos — sin esto, headings sin peso
+  /* Poppins carga pesos específicos — sin esto, headings sin peso
      explícito piden 400 y el navegador ajusta de forma inconsistente. */
   .font-display {
     font-weight: 600;
@@ -78,7 +78,7 @@
      (referencia: ab-hero-title-right del template Ravox). Solo usar en
      tamaños grandes (48px+), un contorno de 2px se pierde en texto chico. */
   .text-outline-accent {
-    color: #111113;
+    color: theme("colors.ink.DEFAULT");
     text-shadow:
       -2px -2px 0 theme("colors.accent.DEFAULT"),
       2px -2px 0 theme("colors.accent.DEFAULT"),
@@ -91,29 +91,29 @@
     @apply h-px w-full bg-bone-border/20;
   }
 
-  /* Tarjeta plana oscura — estilo Ravox (br-16, fondo sólido #101010,
-     borde sutil, hover con borde acento + leve elevación). */
+  /* Tarjeta neumórfica — superficie casi del mismo tono que el fondo,
+     "flota" por la sombra dual en vez de un borde. Hover = leve elevación. */
   .card {
-    @apply bg-ink-surface border border-bone-border/[0.16] transition-all duration-300;
+    @apply bg-ink-surface shadow-neu rounded-2xl transition-all duration-300;
   }
   .card:hover {
-    @apply border-accent/40;
-    transform: translateY(-2px);
+    @apply shadow-neu-lg;
+    transform: translateY(-3px);
   }
 
-  /* Nav flotante sticky — fondo casi opaco + blur leve para legibilidad
-     sobre contenido al hacer scroll. */
+  /* Nav flotante sticky — vidrio claro + blur, sombra suave en vez de borde
+     para mantener el lenguaje neumórfico. */
   .glass-nav {
-    background: rgba(17, 17, 19, 0.82);
+    background: rgba(242, 245, 249, 0.78);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(188, 188, 188, 0.14);
+    box-shadow: 6px 6px 16px rgba(163, 177, 198, 0.35), -6px -6px 16px rgba(255, 255, 255, 0.7);
   }
 
   /* Pill pequeño tipo badge/eyebrow flotante */
   .glass-pill {
-    background: rgba(204, 255, 0, 0.08);
-    border: 1px solid rgba(204, 255, 0, 0.25);
+    background: rgba(255, 138, 66, 0.10);
+    border: 1px solid rgba(255, 138, 66, 0.25);
   }
 
   /* Etiqueta uppercase tracking amplio, estilo tag de membresía */
@@ -121,45 +121,27 @@
     @apply text-xs font-light uppercase tracking-[0.3em] text-bone-mute;
   }
 
-  /* Botón primario con barrido — bg acento + texto oscuro en reposo,
-     al hover un panel oscuro "sube" desde abajo (clip-path) y el texto
-     pasa a blanco. Referencia: primary-btn-one del template Ravox. */
+  /* Botón primario neumórfico — relleno acento, elevado por sombra dual.
+     Al hover se oscurece un punto y sube; al presionar, la sombra se
+     invierte a inset (efecto "botón físico presionado"). */
   .btn-primary {
-    @apply relative isolate overflow-hidden inline-flex items-center justify-center gap-2 rounded-full bg-accent text-ink font-semibold uppercase tracking-wide transition-colors duration-500;
-  }
-  .btn-primary::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--ab-fill, #111113);
-    clip-path: polygon(-10% 100%, 110% 100%, 110% 100%, -10% 100%);
-    transition: clip-path 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-  .btn-primary:hover::before {
-    clip-path: polygon(-10% 100%, 110% 100%, 110% -10%, -10% -10%);
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-accent text-white font-semibold uppercase tracking-wide shadow-neu-sm transition-all duration-300;
   }
   .btn-primary:hover {
-    @apply text-bone;
+    @apply bg-accent-deep shadow-neu;
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    @apply shadow-neu-inset-sm;
+    transform: translateY(0);
   }
 
-  /* Variante outline — borde acento, relleno oscuro al hover */
+  /* Variante outline — misma superficie que el fondo, texto acento,
+     se "hunde" (inset) al hover en vez de rellenarse. */
   .btn-outline {
-    @apply relative isolate overflow-hidden inline-flex items-center justify-center gap-2 rounded-full border border-accent text-accent font-semibold uppercase tracking-wide transition-colors duration-500;
-  }
-  .btn-outline::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: #111113;
-    clip-path: polygon(-10% 100%, 110% 100%, 110% 100%, -10% 100%);
-    transition: clip-path 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-  .btn-outline:hover::before {
-    clip-path: polygon(-10% 100%, 110% 100%, 110% -10%, -10% -10%);
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-ink-surface text-accent font-semibold uppercase tracking-wide shadow-neu-sm transition-all duration-300;
   }
   .btn-outline:hover {
-    @apply text-bone;
+    @apply shadow-neu-inset-sm text-accent-deep;
   }
 }

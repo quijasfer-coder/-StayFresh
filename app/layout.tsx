@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { teko, kanit, mono } from "./fonts";
+import { poppinsDisplay, poppinsBody, mono } from "./fonts";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={cn(teko.variable, kanit.variable, mono.variable, "dark")}
+      className={cn(poppinsDisplay.variable, poppinsBody.variable, mono.variable)}
     >
       <body className="bg-ink text-bone font-body min-h-screen">
         {children}

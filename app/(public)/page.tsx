@@ -1,40 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Truck, WashingMachine, PackageCheck, Wallet } from "lucide-react";
 import { SectionTitle } from "@/components/ui/section-title";
 import { VideoShowcase } from "@/components/ui/video-showcase";
 import { CATEGORY_LABEL, CATEGORY_IMAGE, CATEGORY_ORDER } from "@/lib/categories";
 
 const STEPS = [
-  { icon: "/images/icons/recolectamos.png", title: "Recolectamos", body: "Vamos por tus piezas a tu domicilio, dentro de nuestra zona de cobertura." },
-  { icon: "/images/icons/lavamos.png", title: "Limpiamos", body: "Cada material recibe el producto y técnica que necesita — nada de trato genérico." },
-  { icon: "/images/icons/entregamos.png", title: "Entregamos", body: "En aproximadamente una semana, de vuelta en tu puerta." },
-  { icon: "/images/icons/pago.png", title: "Pagas al final", body: "Pago contra entrega, con garantía de satisfacción." },
+  { icon: Truck, title: "Recolectamos", body: "Vamos por tus piezas a tu domicilio, dentro de nuestra zona de cobertura." },
+  { icon: WashingMachine, title: "Limpiamos", body: "Cada material recibe el producto y técnica que necesita — nada de trato genérico." },
+  { icon: PackageCheck, title: "Entregamos", body: "En aproximadamente una semana, de vuelta en tu puerta." },
+  { icon: Wallet, title: "Pagas al final", body: "Pago contra entrega, con garantía de satisfacción." },
 ];
 
 export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src="/images/hero-background.png"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink/10 via-ink/60 to-ink" />
-        </div>
-
-        <div className="absolute top-6 sm:top-10 left-1/2 -translate-x-1/2 w-60 sm:w-[336px]">
+        <div className="absolute top-6 sm:top-10 left-1/2 -translate-x-1/2 w-80 sm:w-[440px]">
           <Image
             src="/images/stay-fresh-logo.png"
             alt="Stay Fresh"
-            width={1080}
-            height={1350}
-            className="w-full h-auto"
+            width={1254}
+            height={1254}
+            className="w-full h-auto fade-edges"
             priority
           />
         </div>
@@ -53,11 +41,7 @@ export default function HomePage() {
             merecen — recolecta a domicilio, pago contra entrega, garantía
             de satisfacción.
           </p>
-          <Link
-            href="/agendar"
-            className="group relative isolate inline-flex w-fit items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-full px-8 py-9 mt-8 text-sm font-semibold uppercase tracking-wide text-bone transition-transform duration-300 hover:scale-[1.03]"
-          >
-            <Image src="/images/boton.png" alt="" fill sizes="320px" className="-z-10 object-cover" />
+          <Link href="/agendar" className="btn-primary w-fit px-8 py-4 mt-8 text-sm">
             Agendar mi recolecta
             <ArrowUpRight className="w-4 h-4" />
           </Link>
@@ -71,15 +55,13 @@ export default function HomePage() {
       <section className="container py-20">
         <SectionTitle eyebrow="El proceso" title="Cómo funciona" className="mb-12" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {STEPS.map(({ icon, title, body }) => (
-            <div key={title} className="card rounded-2xl p-6 relative min-h-[220px] overflow-hidden">
-              <div className="absolute top-4 right-4 w-28 h-28 sm:w-32 sm:h-32">
-                <Image src={icon} alt="" fill sizes="128px" className="object-contain" />
+          {STEPS.map(({ icon: Icon, title, body }) => (
+            <div key={title} className="card rounded-2xl p-6 min-h-[200px]">
+              <div className="w-14 h-14 rounded-2xl bg-ink-surface shadow-neu-sm flex items-center justify-center mb-5">
+                <Icon className="w-6 h-6 text-accent" strokeWidth={1.75} />
               </div>
-              <div className="relative pr-16 sm:pr-20">
-                <h3 className="font-display font-bold uppercase text-xl mb-2 mt-16 sm:mt-20">{title}</h3>
-                <p className="text-sm text-bone-mute">{body}</p>
-              </div>
+              <h3 className="font-display font-bold uppercase text-xl mb-2">{title}</h3>
+              <p className="text-sm text-bone-mute">{body}</p>
             </div>
           ))}
         </div>
@@ -101,8 +83,8 @@ export default function HomePage() {
                 sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-ink/10" />
-              <p className="absolute bottom-4 left-0 right-0 text-center font-display font-bold uppercase text-2xl">
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/10" />
+              <p className="absolute bottom-4 left-0 right-0 text-center font-display font-bold uppercase text-2xl text-white">
                 {CATEGORY_LABEL[category]}
               </p>
             </Link>
