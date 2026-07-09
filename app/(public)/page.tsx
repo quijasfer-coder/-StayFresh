@@ -27,7 +27,7 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="container min-h-[92vh] sm:min-h-screen flex flex-col justify-end pb-16 sm:pb-24 pt-16">
+        <div className="container min-h-[calc(92vh+7rem)] sm:min-h-screen flex flex-col justify-end pb-16 sm:pb-24 pt-16">
           <span className="glass-pill eyebrow inline-block rounded-full px-4 py-2 w-fit">
             Cuidado experto a domicilio · CDMX
           </span>

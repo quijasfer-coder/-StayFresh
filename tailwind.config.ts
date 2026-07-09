@@ -27,7 +27,7 @@ const config: Config = {
         },
         bone: {
           DEFAULT: "#3D4557",   // texto principal (slate oscuro)
-          mute: "#8791A6",      // texto secundario
+          mute: "#CDC5BD",      // texto secundario
           border: "#C7D0DC",    // divisores/bordes suaves
         },
         // Acento — naranja cálido (kit neumórfico de referencia), reemplaza
