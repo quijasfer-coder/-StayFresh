@@ -18,14 +18,16 @@ export function generateStaticParams() {
   return CATEGORY_ORDER.map((category) => ({ category }));
 }
 
-export function generateMetadata({ params }: { params: { category: string } }) {
-  const category = params.category as ItemCategory;
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
+  const { category: categoryParam } = await params;
+  const category = categoryParam as ItemCategory;
   const label = CATEGORY_LABEL[category];
   return { title: label ? `${label} · Servicios` : "Servicios" };
 }
 
-export default function ServiceCategoryPage({ params }: { params: { category: string } }) {
-  const category = params.category as ItemCategory;
+export default async function ServiceCategoryPage({ params }: { params: Promise<{ category: string }> }) {
+  const { category: categoryParam } = await params;
+  const category = categoryParam as ItemCategory;
   const label = CATEGORY_LABEL[category];
 
   if (!label) notFound();
