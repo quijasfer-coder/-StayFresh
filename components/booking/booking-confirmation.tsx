@@ -15,8 +15,8 @@ export function BookingConfirmation({
       <PackageCheck className="w-10 h-10 text-accent mx-auto mb-4" />
       <h2 className="font-display font-bold uppercase text-3xl mb-2">¡Recolecta agendada!</h2>
       <p className="text-bone-mute">
-        Te esperamos el <span className="text-bone">{formatDateEs(scheduledDate)}</span>. Te
-        avisaremos por WhatsApp en cuanto tengamos novedades de tus piezas.
+        Programamos tu recolecta para el <span className="text-bone">{formatDateEs(scheduledDate)}</span>.
+        Te contactaremos por WhatsApp para confirmar el horario en que pasaremos por tus piezas.
       </p>
       {totalCents > 0 && (
         <div className="mt-6 pt-6 border-t border-bone-border/[0.16]">
