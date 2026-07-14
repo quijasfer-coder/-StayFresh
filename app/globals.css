@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Stay Fresh — soft UI neumórfico claro + acento naranja */
+    /* Stay Fresh — soft UI neumórfico claro + acento verde */
     --background: 225 16% 90%;        /* #E2E4EA */
     --foreground: 220 18% 27%;        /* #3D4557 */
 
@@ -14,7 +14,7 @@
     --popover: 213 30% 97%;
     --popover-foreground: 220 18% 27%;
 
-    --primary: 23 100% 63%;           /* Accent #FF8A42 */
+    --primary: 171 59% 11%;           /* Accent #0B2B26 */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 225 16% 90%;
@@ -23,7 +23,7 @@
     --muted: 214 22% 88%;
     --muted-foreground: 220 12% 52%;  /* Bone mute #8791A6 */
 
-    --accent: 23 100% 63%;
+    --accent: 171 59% 11%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 358 74% 60%;
@@ -31,7 +31,7 @@
 
     --border: 216 22% 80%;            /* #C7D0DC, usado con opacidad baja */
     --input: 213 30% 96%;
-    --ring: 23 100% 63%;
+    --ring: 171 59% 11%;
 
     --radius: 1.25rem;
   }
@@ -112,8 +112,8 @@
 
   /* Pill pequeño tipo badge/eyebrow flotante */
   .glass-pill {
-    background: rgba(255, 138, 66, 0.10);
-    border: 1px solid rgba(255, 138, 66, 0.25);
+    background: rgba(11, 43, 38, 0.10);
+    border: 1px solid rgba(11, 43, 38, 0.25);
   }
 
   /* Etiqueta uppercase tracking amplio, estilo tag de membresía */

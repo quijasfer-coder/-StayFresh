@@ -30,12 +30,11 @@ const config: Config = {
           mute: "#8791A6",      // texto secundario
           border: "#C7D0DC",    // divisores/bordes suaves
         },
-        // Acento — naranja cálido (kit neumórfico de referencia), reemplaza
-        // la lima anterior. Un solo color selectivo sobre la base gris clara.
+        // Acento — verde clásico. Un solo color selectivo sobre la base gris clara.
         accent: {
-          DEFAULT: "#FF8A42",
-          deep: "#E06A1D",
-          wash: "#FFE7D2",
+          DEFAULT: "#0B2B26",
+          deep: "#081F1B",
+          wash: "#D6E3E0",
         },
         // Superficie oscura reservada SOLO para veils/gradientes sobre fotos
         // (hero, tarjetas de catálogo) — el resto del sitio es claro.
@@ -91,7 +90,7 @@ const config: Config = {
       },
       backgroundImage: {
         "spotlight":
-          "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,138,66,0.16), rgba(0,0,0,0) 70%)",
+          "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(11,43,38,0.16), rgba(0,0,0,0) 70%)",
         "grain":
           "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='3' /></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>\")",
       },
