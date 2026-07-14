@@ -73,7 +73,7 @@ export default function HomePage() {
           {CATEGORY_ORDER.map((category) => (
             <Link
               key={category}
-              href="/servicios"
+              href={`/servicios/${category}`}
               className="card group relative overflow-hidden rounded-2xl aspect-[3/4]"
             >
               <Image

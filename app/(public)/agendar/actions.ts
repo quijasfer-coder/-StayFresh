@@ -9,6 +9,7 @@ export type BookingItemInput = {
   quantity: number;
   description?: string;
   priceCents?: number | null;
+  photoUrl?: string | null;
 };
 
 export type BookingPayload = {
@@ -75,6 +76,7 @@ export async function submitBookingAction(
         quantity: item.quantity,
         description: item.description,
         price_cents: item.priceCents ?? null,
+        photo_url: item.photoUrl ?? null,
       })),
     });
 

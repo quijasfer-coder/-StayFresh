@@ -1,16 +1,20 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { CheckCircle2, XCircle, Plus, Trash2, AlertCircle } from "lucide-react";
+import { CheckCircle2, XCircle, Plus, Trash2, AlertCircle, Camera, X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatMXN, pluralizeItems } from "@/lib/format";
 import type { PriceTier } from "@/lib/queries/pricing";
+import { createClient } from "@/lib/supabase/client";
 import {
   checkCoverageAction,
   submitBookingAction,
   type BookingItemInput,
 } from "./actions";
 import { BookingConfirmation } from "@/components/booking/booking-confirmation";
+
+const MAX_PHOTO_BYTES = 8 * 1024 * 1024;
+const PHOTO_BUCKET = "pickup-photos";
 
 const CATEGORY_OPTIONS: { value: BookingItemInput["category"]; label: string }[] = [
   { value: "tenis", label: "Tenis / sneakers" },
@@ -40,6 +44,9 @@ export function BookingForm({ priceTiers }: { priceTiers: PriceTier[] }) {
   const [cp, setCp] = useState("");
   const [scheduledDate, setScheduledDate] = useState("");
   const [items, setItems] = useState<BookingItemInput[]>([defaultItemForCategory("tenis", priceTiers)]);
+  const [photoPreviews, setPhotoPreviews] = useState<(string | null)[]>([null]);
+  const [photoUploading, setPhotoUploading] = useState<boolean[]>([false]);
+  const [photoErrors, setPhotoErrors] = useState<(string | null)[]>([null]);
 
   const [coverage, setCoverage] = useState<CoverageStatus>("idle");
   const [coveragePending, startCoverageCheck] = useTransition();
@@ -72,6 +79,49 @@ export function BookingForm({ priceTiers }: { priceTiers: PriceTier[] }) {
 
   function handleCategoryChange(index: number, category: BookingItemInput["category"]) {
     setItems((prev) => prev.map((item, i) => (i === index ? defaultItemForCategory(category, priceTiers) : item)));
+    clearPhoto(index);
+  }
+
+  async function handlePhotoChange(index: number, file: File | null) {
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setPhotoErrors((prev) => prev.map((e, i) => (i === index ? "Selecciona una imagen." : e)));
+      return;
+    }
+    if (file.size > MAX_PHOTO_BYTES) {
+      setPhotoErrors((prev) => prev.map((e, i) => (i === index ? "La foto pesa más de 8MB." : e)));
+      return;
+    }
+
+    setPhotoErrors((prev) => prev.map((e, i) => (i === index ? null : e)));
+
+    const previewUrl = URL.createObjectURL(file);
+    setPhotoPreviews((prev) => prev.map((p, i) => (i === index ? previewUrl : p)));
+    setPhotoUploading((prev) => prev.map((u, i) => (i === index ? true : u)));
+
+    try {
+      const supabase = createClient();
+      const ext = file.name.split(".").pop() || "jpg";
+      const path = `booking/${crypto.randomUUID()}.${ext}`;
+      const { error: uploadError } = await supabase.storage.from(PHOTO_BUCKET).upload(path, file);
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from(PHOTO_BUCKET).getPublicUrl(path);
+      updateItem(index, { photoUrl: data.publicUrl });
+    } catch {
+      setPhotoErrors((prev) => prev.map((e, i) => (i === index ? "No pudimos subir la foto. Intenta de nuevo." : e)));
+      setPhotoPreviews((prev) => prev.map((p, i) => (i === index ? null : p)));
+      updateItem(index, { photoUrl: null });
+    } finally {
+      setPhotoUploading((prev) => prev.map((u, i) => (i === index ? false : u)));
+    }
+  }
+
+  function clearPhoto(index: number) {
+    setPhotoPreviews((prev) => prev.map((p, i) => (i === index ? null : p)));
+    setPhotoErrors((prev) => prev.map((e, i) => (i === index ? null : e)));
+    updateItem(index, { photoUrl: null });
   }
 
   function handleTierChange(index: number, quantity: number) {
@@ -86,11 +136,19 @@ export function BookingForm({ priceTiers }: { priceTiers: PriceTier[] }) {
 
   function addItem() {
     setItems((prev) => [...prev, defaultItemForCategory("tenis", priceTiers)]);
+    setPhotoPreviews((prev) => [...prev, null]);
+    setPhotoUploading((prev) => [...prev, false]);
+    setPhotoErrors((prev) => [...prev, null]);
   }
 
   function removeItem(index: number) {
     setItems((prev) => prev.filter((_, i) => i !== index));
+    setPhotoPreviews((prev) => prev.filter((_, i) => i !== index));
+    setPhotoUploading((prev) => prev.filter((_, i) => i !== index));
+    setPhotoErrors((prev) => prev.filter((_, i) => i !== index));
   }
+
+  const anyPhotoUploading = photoUploading.some(Boolean);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -230,57 +288,99 @@ export function BookingForm({ priceTiers }: { priceTiers: PriceTier[] }) {
             const hasTiers = tiersForCategory.length > 0;
 
             return (
-              <div key={index} className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-                <select
-                  value={item.category}
-                  onChange={(e) => handleCategoryChange(index, e.target.value as BookingItemInput["category"])}
-                  className={cn(inputClass, "sm:w-48")}
-                >
-                  {CATEGORY_OPTIONS.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-
-                {hasTiers ? (
+              <div key={index} className="space-y-2 pb-3 border-b border-bone-border/10 last:border-0">
+                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
                   <select
-                    value={item.quantity}
-                    onChange={(e) => handleTierChange(index, Number(e.target.value))}
-                    className={cn(inputClass, "sm:w-56")}
+                    value={item.category}
+                    onChange={(e) => handleCategoryChange(index, e.target.value as BookingItemInput["category"])}
+                    className={cn(inputClass, "sm:w-48")}
                   >
-                    {tiersForCategory.map((tier) => (
-                      <option key={tier.id} value={tier.quantity}>
-                        {pluralizeItems(tier.quantity, tier.category)} — {formatMXN(tier.price_cents)}
+                    {CATEGORY_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
                       </option>
                     ))}
                   </select>
-                ) : (
-                  <input
-                    type="number"
-                    min={1}
-                    value={item.quantity}
-                    onChange={(e) => updateItem(index, { quantity: Number(e.target.value) })}
-                    className={cn(inputClass, "sm:w-24")}
-                  />
-                )}
 
-                <input
-                  value={item.description ?? ""}
-                  onChange={(e) => updateItem(index, { description: e.target.value })}
-                  placeholder="Descripción (opcional) — ej. Jordan 1 Chicago"
-                  className={cn(inputClass, "flex-1")}
-                />
-                {items.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeItem(index)}
-                    className="text-bone-mute hover:text-danger p-2"
-                    aria-label="Quitar pieza"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                )}
+                  {hasTiers ? (
+                    <select
+                      value={item.quantity}
+                      onChange={(e) => handleTierChange(index, Number(e.target.value))}
+                      className={cn(inputClass, "sm:w-56")}
+                    >
+                      {tiersForCategory.map((tier) => (
+                        <option key={tier.id} value={tier.quantity}>
+                          {pluralizeItems(tier.quantity, tier.category)} — {formatMXN(tier.price_cents)}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      type="number"
+                      min={1}
+                      value={item.quantity}
+                      onChange={(e) => updateItem(index, { quantity: Number(e.target.value) })}
+                      className={cn(inputClass, "sm:w-24")}
+                    />
+                  )}
+
+                  <input
+                    value={item.description ?? ""}
+                    onChange={(e) => updateItem(index, { description: e.target.value })}
+                    placeholder="Descripción (opcional) — ej. Jordan 1 Chicago"
+                    className={cn(inputClass, "flex-1")}
+                  />
+                  {items.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeItem(index)}
+                      className="text-bone-mute hover:text-danger p-2"
+                      aria-label="Quitar pieza"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {photoPreviews[index] ? (
+                    <div className="relative shrink-0">
+                      <img
+                        src={photoPreviews[index]!}
+                        alt="Foto de la pieza"
+                        className="w-14 h-14 rounded-lg object-cover border border-bone-border/40"
+                      />
+                      {photoUploading[index] ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-ink/60 rounded-lg">
+                          <Loader2 className="w-4 h-4 text-bone animate-spin" />
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => clearPhoto(index)}
+                          className="absolute -top-1.5 -right-1.5 bg-ink border border-bone-border/40 rounded-full p-0.5 text-bone-mute hover:text-danger"
+                          aria-label="Quitar foto"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    <label className="inline-flex items-center gap-1.5 text-xs text-bone-mute hover:text-bone cursor-pointer">
+                      <Camera className="w-4 h-4" />
+                      Agregar foto (opcional)
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handlePhotoChange(index, e.target.files?.[0] ?? null)}
+                      />
+                    </label>
+                  )}
+                  {photoErrors[index] && (
+                    <span className="text-xs text-danger">{photoErrors[index]}</span>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -314,10 +414,10 @@ export function BookingForm({ priceTiers }: { priceTiers: PriceTier[] }) {
 
         <button
           type="submit"
-          disabled={submitPending}
+          disabled={submitPending || anyPhotoUploading}
           className="btn-primary w-full sm:w-auto px-8 py-3.5 text-sm disabled:opacity-50"
         >
-          {submitPending ? "Agendando…" : "Confirmar recolecta"}
+          {anyPhotoUploading ? "Subiendo foto…" : submitPending ? "Agendando…" : "Confirmar recolecta"}
         </button>
       </fieldset>
     </form>

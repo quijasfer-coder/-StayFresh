@@ -52,9 +52,20 @@ export default async function PickupDetailPage({
         <ul className="space-y-2 text-sm">
           {pickup.pickup_items.map((item) => (
             <li key={item.id} className="flex items-center justify-between gap-3 border-b border-bone-border/10 pb-2 last:border-0">
-              <span>
-                {item.quantity}× {CATEGORY_LABEL[item.category] ?? item.category}
-                {item.description && <span className="text-bone-mute"> — {item.description}</span>}
+              <span className="flex items-center gap-3">
+                {item.photo_url && (
+                  <a href={item.photo_url} target="_blank" rel="noopener noreferrer">
+                    <img
+                      src={item.photo_url}
+                      alt={`Foto de ${CATEGORY_LABEL[item.category] ?? item.category}`}
+                      className="w-10 h-10 rounded-lg object-cover border border-bone-border/40"
+                    />
+                  </a>
+                )}
+                <span>
+                  {item.quantity}× {CATEGORY_LABEL[item.category] ?? item.category}
+                  {item.description && <span className="text-bone-mute"> — {item.description}</span>}
+                </span>
               </span>
               <span className="text-bone-mute whitespace-nowrap">
                 {item.price_cents != null ? formatMXN(item.price_cents) : "A cotizar"}

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { createPublicClient } from "@/lib/supabase/server";
 import { listActiveServices } from "@/lib/queries/services";
 import { SectionTitle } from "@/components/ui/section-title";
@@ -18,13 +19,17 @@ export default async function ServiciosPage() {
       <SectionTitle eyebrow="Catálogo" title="Nuestros servicios" className="mb-12" />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {services.map((service) => (
-          <div key={service.id} className="card relative overflow-hidden rounded-2xl min-h-[220px] flex items-end">
+          <Link
+            key={service.id}
+            href={`/servicios/${service.category}`}
+            className="card group relative overflow-hidden rounded-2xl min-h-[220px] flex items-end"
+          >
             <Image
               src={CATEGORY_IMAGE[service.category]}
               alt=""
               fill
               sizes="(max-width: 640px) 100vw, 50vw"
-              className="object-cover"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
             <div className="relative p-6">
@@ -36,7 +41,7 @@ export default async function ServiciosPage() {
                 <p className="text-sm text-white/70 mt-2">{service.description}</p>
               )}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
