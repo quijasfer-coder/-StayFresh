@@ -14,7 +14,7 @@
     --popover: 213 30% 97%;
     --popover-foreground: 220 18% 27%;
 
-    --primary: 171 59% 11%;           /* Accent #0B2B26 */
+    --primary: 102 52% 19%;           /* Accent #264817 */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 225 16% 90%;
@@ -23,7 +23,7 @@
     --muted: 214 22% 88%;
     --muted-foreground: 220 12% 52%;  /* Bone mute #8791A6 */
 
-    --accent: 171 59% 11%;
+    --accent: 102 52% 19%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 358 74% 60%;
@@ -31,7 +31,7 @@
 
     --border: 216 22% 80%;            /* #C7D0DC, usado con opacidad baja */
     --input: 213 30% 96%;
-    --ring: 171 59% 11%;
+    --ring: 102 52% 19%;
 
     --radius: 1.25rem;
   }
@@ -112,8 +112,8 @@
 
   /* Pill pequeño tipo badge/eyebrow flotante */
   .glass-pill {
-    background: rgba(11, 43, 38, 0.10);
-    border: 1px solid rgba(11, 43, 38, 0.25);
+    background: rgba(38, 72, 23, 0.10);
+    border: 1px solid rgba(38, 72, 23, 0.25);
   }
 
   /* Etiqueta uppercase tracking amplio, estilo tag de membresía */
