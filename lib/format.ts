@@ -53,6 +53,14 @@ export function formatMXN(cents: number): string {
   });
 }
 
+/** Normaliza a formato E.164 sin "+" que espera wa.me (asume México si no trae lada). */
+export function toWhatsappNumber(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.startsWith("52")) return digits;
+  if (digits.length === 10) return `52${digits}`;
+  return digits;
+}
+
 export function formatDateTimeEs(value: string | Date): string {
   const date = typeof value === "string" ? new Date(value) : value;
   return date.toLocaleString("es-MX", {
