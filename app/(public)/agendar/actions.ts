@@ -2,6 +2,7 @@
 
 import { createPublicClient } from "@/lib/supabase/server";
 import { checkCoverage } from "@/lib/queries/coverage";
+import { notifyAdminsNewBooking } from "@/lib/email";
 import type { Database } from "@/lib/database.types";
 
 export type BookingItemInput = {
@@ -84,7 +85,15 @@ export async function submitBookingAction(
       return { ok: false, error: mapPgError(error.message) };
     }
 
-    return { ok: true, pickupId: data as string };
+    const pickupId = data as string;
+
+    try {
+      await notifyAdminsNewBooking(pickupId);
+    } catch (notifyError) {
+      console.error("[email] fallo notificando booking nuevo", notifyError);
+    }
+
+    return { ok: true, pickupId };
   } catch {
     return { ok: false, error: "No pudimos agendar tu recolecta. Intenta de nuevo." };
   }

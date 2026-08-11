@@ -100,6 +100,28 @@ Una vez completado el checklist, llena las variables `WHATSAPP_*` en
 `.env.local` / en Vercel y prueba con el webhook test tool del dashboard de
 Meta antes de considerar la Fase 3 lista para producción.
 
+## Email de notificación a admins (Brevo) — checklist manual
+
+Cada vez que alguien agenda una recolección en `/agendar`, se envía un
+correo con los datos del booking a todos los `profiles` con `role = 'admin'`
+(`lib/email.ts`, llamado desde `submitBookingAction`, vía la API
+transaccional REST de Brevo — sin SDK, un `fetch` directo a
+`api.brevo.com/v3/smtp/email`, igual patrón que `lib/whatsapp.ts`). Queda
+**inerte** mientras falten `BREVO_API_KEY` / `BREVO_FROM_EMAIL` (loguea un
+warning, nunca bloquea el agendamiento). Pasos manuales:
+
+1. El dominio `stayfreshcleanstudio.com` ya está autenticado en Brevo
+   (Settings → Remitentes, dominio, IP → Dominios) — no falta nada ahí.
+2. Definir `BREVO_FROM_EMAIL` con una dirección sobre ese dominio (ej.
+   `recolecciones@stayfreshcleanstudio.com` — no hace falta que exista como
+   buzón real, Brevo solo la usa como remitente).
+3. Settings → SMTP y API → API Keys → generar una API key y copiarla a
+   `BREVO_API_KEY`.
+4. Para que un correo reciba estas notificaciones, su cuenta debe existir en
+   `profiles` con `role = 'admin'` (ver sección "Cuentas de staff" arriba).
+5. Llenar `BREVO_API_KEY` / `BREVO_FROM_EMAIL` en `.env.local` y en Vercel,
+   luego probar agendando una recolección real desde `/agendar`.
+
 ## Verificación end-to-end
 
 1. `npm run dev` — la home carga sin errores de consola.
